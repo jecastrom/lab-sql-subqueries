@@ -125,6 +125,34 @@ image::https://user-images.githubusercontent.com/63274055/151395424-c438b1ec-a29
 
 == Use subqueries to display all actors who appear in the film Alone Trip.
 
+`*_Answer:_*`
+
+```sql
+SELECT
+    a.actor_id,
+    concat(a.first_name, ' ', a.last_name) AS actors,
+    (
+        SELECT
+            title
+        FROM
+            film
+        WHERE
+            title = 'Alone Trip'
+    ) AS film_title
+FROM
+    film f
+    INNER JOIN film_actor fa ON f.film_id = fa.film_id
+    INNER JOIN actor a ON fa.actor_id = a.actor_id
+WHERE
+    title = 'Alone Trip'
+GROUP BY
+    1;
+```
+
+image::https://user-images.githubusercontent.com/63274055/151462706-6444c2a0-0f75-40e6-8a60-a575008578e9.png[width=600]
+
+
+
 == Sales have been lagging among young families, and you wish to target all family movies for a promotion. Identify all movies categorized as family films.
 
 == Get name and email from customers from Canada using subqueries. Do the same with joins. Note that to create a join, you will have to identify the correct tables with their primary keys and foreign keys, that will help you get the relevant information.
