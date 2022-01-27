@@ -7,7 +7,7 @@
 :rel-cont: https://github.com/jecastrom/data_3.05_activities.git
 //:fn-xxx: Add the explanation foot note here bla bla
 :toc:
-:toc-title: Lab description: In this lab, you will....
+:toc-title: In this lab, you will be using the Sakila database of movie rentals. Create appropriate joins wherever necessary.
 :toc-placement!:
 :toclevels: 5
 ifdef::env-github[]
