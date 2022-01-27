@@ -100,6 +100,29 @@ image::https://user-images.githubusercontent.com/63274055/151388929-7ae54480-08f
 
 == List all films whose length is longer than the average of all the films.
 
+`*_Answer:_*`
+
+```sql
+SELECT
+    title AS film_title,
+    length AS above_avg_duration
+FROM
+    film
+WHERE
+    length > (
+        SELECT
+            avg(length)
+        FROM
+            film
+    )
+ORDER BY
+    2 DESC;
+```
+
+image::https://user-images.githubusercontent.com/63274055/151395424-c438b1ec-a295-47cd-a108-e348111febf2.png[width=600]
+
+
+
 == Use subqueries to display all actors who appear in the film Alone Trip.
 
 == Sales have been lagging among young families, and you wish to target all family movies for a promotion. Identify all movies categorized as family films.
