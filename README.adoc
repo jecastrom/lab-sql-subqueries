@@ -68,6 +68,36 @@ toc::[]
 
 == How many copies of the film Hunchback Impossible exist in the inventory system?
 
+`*_Answer:_*`
+
+```sql
+SELECT
+    title,
+    (
+        SELECT
+            count(inventory_id) AS num_of_copies
+        FROM
+            inventory
+        WHERE
+            film_id IN (
+                SELECT
+                    film_id
+                FROM
+                    film
+                WHERE
+                    title = 'Hunchback Impossible'
+            )
+    ) AS num_of_copies_available
+FROM
+    film
+WHERE
+    title = 'Hunchback Impossible';
+```
+
+image::https://user-images.githubusercontent.com/63274055/151388929-7ae54480-08f3-49f1-84d2-8b039b8734f1.png[width=600]
+
+
+
 == List all films whose length is longer than the average of all the films.
 
 == Use subqueries to display all actors who appear in the film Alone Trip.
