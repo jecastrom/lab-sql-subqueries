@@ -186,11 +186,53 @@ image::https://user-images.githubusercontent.com/63274055/151557399-3d5c8491-1f9
 [NOTE]
 ====
 Here only using subqueries I can output the expected result: a list of film titles. However, I wanted to add more details so a user can quickly identify what the table is showing. If I wanted to add a column with the name of the category, and category_id for example, it seems to me that the query would become much bigger, having to write more when the same result can be obtained with a join approach.
-
-This is why I combined the subqueries with joins in the next query:
 ====
 
-`*_Answer:_*`
+```sql
+SELECT
+    (
+        SELECT
+            category_id
+        FROM
+            category
+        WHERE
+            `name` = 'Family'
+    ) AS category_id,
+    (
+        SELECT
+            `name`
+        FROM
+            category
+        WHERE
+            `name` = 'Family'
+    ) AS film_category,
+    title AS film_title
+FROM
+    film
+WHERE
+    film_id IN (
+        SELECT
+            film_id
+        FROM
+            film_category
+        WHERE
+            category_id = (
+                SELECT
+                    category_id
+                FROM
+                    category
+                WHERE
+                    name = 'Family'
+            )
+    );
+```
+
+image::https://user-images.githubusercontent.com/63274055/151578168-8e6bf390-9491-4a5e-9ca2-030af2145574.png[width=600]
+
+
+
+
+`*_Answer: combining joins and subqueries_*`
 
 ```sql
 SELECT
