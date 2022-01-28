@@ -1,19 +1,48 @@
 SELECT
-    a.actor_id,
-    concat(a.first_name, ' ', a.last_name) AS actors,
-    (
-        SELECT
-            title
-        FROM
-            film
-        WHERE
-            title = 'Alone Trip'
-    ) AS film_title
+    c.category_id,
+    c.`name` AS category,
+    f.film_id,
+    f.title AS film_title
 FROM
     film f
-    INNER JOIN film_actor fa ON f.film_id = fa.film_id
-    INNER JOIN actor a ON fa.actor_id = a.actor_id
+    INNER JOIN (
+        SELECT
+            film_id,
+            category_id
+        FROM
+            film_category
+    ) fc ON f.film_id = fc.film_id
+    INNER JOIN (
+        SELECT
+            category_id,
+            `name`
+        FROM
+            category
+        WHERE
+            `name` = 'Family'
+    ) c ON fc.category_id = c.category_id
+LIMIT
+    10;
+------********************************************
+SELECT
+    title
+FROM
+    film
 WHERE
-    title = 'Alone Trip'
-GROUP BY
-    1;
+    film_id IN (
+        SELECT
+            film_id
+        FROM
+            film_category
+        WHERE
+            category_id = (
+                SELECT
+                    category_id
+                FROM
+                    category
+                WHERE
+                    name = 'Family'
+            )
+    )
+LIMIT
+    10;

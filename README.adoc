@@ -155,6 +155,74 @@ image::https://user-images.githubusercontent.com/63274055/151462706-6444c2a0-0f7
 
 == Sales have been lagging among young families, and you wish to target all family movies for a promotion. Identify all movies categorized as family films.
 
+`*_Answer:_*`
+
+```sql
+SELECT
+    title
+FROM
+    film
+WHERE
+    film_id IN (
+        SELECT
+            film_id
+        FROM
+            film_category
+        WHERE
+            category_id = (
+                SELECT
+                    category_id
+                FROM
+                    category
+                WHERE
+                    name = 'Family'
+            )
+    );
+```
+
+
+image::https://user-images.githubusercontent.com/63274055/151557399-3d5c8491-1f96-4958-963f-a497d5b41daa.png[width=600]
+
+[NOTE]
+====
+Here only using subqueries I can output the expected result: a list of film titles. However, I wanted to add more details so a user can quickly identify what the table is showing. If I wanted to add a column with the name of the category, and category_id for example, it seems to me that the query would become much bigger, having to write more when the same result can be obtained with a join approach.
+
+This is why I combined the subqueries with joins in the next query:
+====
+
+`*_Answer:_*`
+
+```sql
+SELECT
+    c.category_id,
+    c.`name` AS category,
+    f.film_id,
+    f.title AS film_title
+FROM
+    film f
+    INNER JOIN (
+        SELECT
+            film_id,
+            category_id
+        FROM
+            film_category
+    ) fc ON f.film_id = fc.film_id
+    INNER JOIN (
+        SELECT
+            category_id,
+            `name`
+        FROM
+            category
+        WHERE
+            `name` = 'Family'
+    ) c ON fc.category_id = c.category_id;
+```
+
+image::https://user-images.githubusercontent.com/63274055/151557176-213b276c-868d-499a-8f60-0dcbacb456cc.png[width=600]
+
+
+
+
 == Get name and email from customers from Canada using subqueries. Do the same with joins. Note that to create a join, you will have to identify the correct tables with their primary keys and foreign keys, that will help you get the relevant information.
 
 == Which are films starred by the most prolific actor? Most prolific actor is defined as the actor that has acted in the most number of films. First you will have to find the most prolific actor and then use that actor_id to find the different films that he/she starred.
