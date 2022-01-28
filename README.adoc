@@ -425,7 +425,8 @@ xref:Get-the-client_id-and-the-total_amount_spent[Bottom section]
 
 == Films rented by most profitable customer. You can use the customer table and payment table to find the most profitable customer ie the customer that has made the largest sum of payments
 
-`*_Answer: step by step_*`
+`*_Answer: step by step_*` 
+
 Step 1: _Every query will be used as a filter in the `WHERE` clause. First I need to identify the `customer_id` of the customer that has made the largest sum of payments_
 
 ```sql
