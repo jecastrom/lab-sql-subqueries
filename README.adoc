@@ -96,7 +96,9 @@ WHERE
 
 image::https://user-images.githubusercontent.com/63274055/151388929-7ae54480-08f3-49f1-84d2-8b039b8734f1.png[width=600]
 
+xref:Lab-SQL-Subqueries[Top Section]
 
+xref:Get-the-client_id-and-the-total_amount_spent[Bottom section]
 
 == List all films whose length is longer than the average of all the films.
 
@@ -121,7 +123,9 @@ ORDER BY
 
 image::https://user-images.githubusercontent.com/63274055/151395424-c438b1ec-a295-47cd-a108-e348111febf2.png[width=600]
 
+xref:Lab-SQL-Subqueries[Top Section]
 
+xref:Get-the-client_id-and-the-total_amount_spent[Bottom section]
 
 == Use subqueries to display all actors who appear in the film Alone Trip.
 
@@ -151,7 +155,9 @@ GROUP BY
 
 image::https://user-images.githubusercontent.com/63274055/151462706-6444c2a0-0f75-40e6-8a60-a575008578e9.png[width=600]
 
+xref:Lab-SQL-Subqueries[Top Section]
 
+xref:Get-the-client_id-and-the-total_amount_spent[Bottom section]
 
 == Sales have been lagging among young families, and you wish to target all family movies for a promotion. Identify all movies categorized as family films.
 
@@ -263,7 +269,9 @@ FROM
 image::https://user-images.githubusercontent.com/63274055/151557176-213b276c-868d-499a-8f60-0dcbacb456cc.png[width=600]
 
 
+xref:Lab-SQL-Subqueries[Top Section]
 
+xref:Get-the-client_id-and-the-total_amount_spent[Bottom section]
 
 == Get name and email from customers from Canada using subqueries. Do the same with joins. Note that to create a join, you will have to identify the correct tables with their primary keys and foreign keys, that will help you get the relevant information.
 
@@ -338,7 +346,9 @@ WHERE
 
 image::https://user-images.githubusercontent.com/63274055/151582323-a5c1d1f3-a3a9-46b7-8b2f-4d3188c15f1e.png[width=600]
 
+xref:Lab-SQL-Subqueries[Top Section]
 
+xref:Get-the-client_id-and-the-total_amount_spent[Bottom section]
 
 
 == Which are films starred by the most prolific actor? Most prolific actor is defined as the actor that has acted in the most number of films. First you will have to find the most prolific actor and then use that actor_id to find the different films that he/she starred.
@@ -409,7 +419,9 @@ FROM
 
 image::https://user-images.githubusercontent.com/63274055/151595302-d4e961ef-cc17-4518-a048-16ee8973504f.png[width=600]
 
+xref:Lab-SQL-Subqueries[Top Section]
 
+xref:Get-the-client_id-and-the-total_amount_spent[Bottom section]
 
 == Films rented by most profitable customer. You can use the customer table and payment table to find the most profitable customer ie the customer that has made the largest sum of payments
 
@@ -689,7 +701,9 @@ WHERE
 
 image::https://user-images.githubusercontent.com/63274055/151607288-cf8aa5f7-91f5-4071-a07d-8f81f2874d89.png[width=600]
 
+xref:Lab-SQL-Subqueries[Top Section]
 
+xref:Get-the-client_id-and-the-total_amount_spent[Bottom section]
 
 == Get the client_id and the total_amount_spent
 
@@ -727,13 +741,6 @@ ORDER BY
 ```
 
 image::https://user-images.githubusercontent.com/63274055/151611296-4b0cad6d-f3fe-4bc1-acf1-99b81f8de422.png[width=600]
-
-
-
-
-====
-''''
-====
 
 
 ====
