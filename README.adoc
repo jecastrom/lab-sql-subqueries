@@ -322,10 +322,21 @@ image::https://user-images.githubusercontent.com/63274055/151573620-a99b4eda-913
 `*_Answer: with joins_*`
 
 ```sql
-
+SELECT
+    c.customer_id,
+    concat(c.first_name, ' ', c.last_name) AS customer_name,
+    c.email,
+    co.country
+FROM
+    customer c
+    INNER JOIN address a ON c.address_id = a.address_id
+    INNER JOIN city ci ON a.city_id = ci.city_id
+    INNER JOIN country co ON ci.country_id = co.country_id
+WHERE
+    country = 'Canada';
 ```
 
-image::path[width=600]
+image::https://user-images.githubusercontent.com/63274055/151582323-a5c1d1f3-a3a9-46b7-8b2f-4d3188c15f1e.png[width=600]
 
 
 

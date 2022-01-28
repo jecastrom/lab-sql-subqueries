@@ -1,36 +1,12 @@
 SELECT
-    (
-        SELECT
-            category_id
-        FROM
-            category
-        WHERE
-            `name` = 'Family'
-    ) AS category_id,
-    (
-        SELECT
-            `name`
-        FROM
-            category
-        WHERE
-            `name` = 'Family'
-    ) AS film_category,
-    title AS film_title
+    c.customer_id,
+    concat(c.first_name, ' ', c.last_name) AS customer_name,
+    c.email,
+    co.country
 FROM
-    film
+    customer c
+    INNER JOIN address a ON c.address_id = a.address_id
+    INNER JOIN city ci ON a.city_id = ci.city_id
+    INNER JOIN country co ON ci.country_id = co.country_id
 WHERE
-    film_id IN (
-        SELECT
-            film_id
-        FROM
-            film_category
-        WHERE
-            category_id = (
-                SELECT
-                    category_id
-                FROM
-                    category
-                WHERE
-                    name = 'Family'
-            )
-    );
+    country = 'Canada';
