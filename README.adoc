@@ -225,6 +225,69 @@ image::https://user-images.githubusercontent.com/63274055/151557176-213b276c-868
 
 == Get name and email from customers from Canada using subqueries. Do the same with joins. Note that to create a join, you will have to identify the correct tables with their primary keys and foreign keys, that will help you get the relevant information.
 
+`*_Answer: subqueries_*`
+
+```sql
+SELECT
+    customer_id,
+    first_name,
+    last_name,
+    email,
+    (
+        SELECT
+            country
+        FROM
+            country
+        WHERE
+            country = 'Canada'
+    ) AS country
+FROM
+    customer
+WHERE
+    address_id IN (
+        SELECT
+            address_id
+        FROM
+            address
+        WHERE
+            city_id IN (
+                SELECT
+                    city_id
+                FROM
+                    address
+                WHERE
+                    city_id IN (
+                        SELECT
+                            city_id
+                        FROM
+                            city
+                        WHERE
+                            country_id = (
+                                SELECT
+                                    country_id
+                                FROM
+                                    country
+                                WHERE
+                                    country = 'Canada'
+                            )
+                    )
+            )
+    );
+```
+
+image::https://user-images.githubusercontent.com/63274055/151573620-a99b4eda-9131-4b6a-9671-7c9855e8295a.png[width=600]
+
+`*_Answer: with joins_*`
+
+```sql
+
+```
+
+image::path[width=600]
+
+
+
+
 == Which are films starred by the most prolific actor? Most prolific actor is defined as the actor that has acted in the most number of films. First you will have to find the most prolific actor and then use that actor_id to find the different films that he/she starred.
 
 == Films rented by most profitable customer. You can use the customer table and payment table to find the most profitable customer ie the customer that has made the largest sum of payments
