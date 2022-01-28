@@ -413,6 +413,260 @@ image::https://user-images.githubusercontent.com/63274055/151595302-d4e961ef-cc1
 
 == Films rented by most profitable customer. You can use the customer table and payment table to find the most profitable customer ie the customer that has made the largest sum of payments
 
+`*_Answer: step by step_*`
+. _Every query will be used as a filter in the `WHERE` clause. First I need to identify the `customer_id` of the customer that has made the largest sum of payments_
+
+```sql
+SELECT
+    customer_id,
+    sum(amount)
+FROM
+    payment
+GROUP BY
+    1
+ORDER BY
+    2 DESC
+LIMIT
+    1;
+```
+
+image::https://user-images.githubusercontent.com/63274055/151601450-eade6fec-4e04-4763-9db1-7d227c4dffec.png[width=600]
+
+. _Now I need to have a query that outputs only the `customer_id`. The previous query has two columns and it would not work to use it as a subquery. But I will use it to create the new query_
+
+```sql
+SELECT
+    customer_id
+FROM
+    (
+        SELECT
+            customer_id,
+            sum(amount)
+        FROM
+            payment
+        GROUP BY
+            1
+        ORDER BY
+            2 DESC
+        LIMIT
+            1
+    ) t;
+```
+
+image::https://user-images.githubusercontent.com/63274055/151602299-c3420d17-9ec7-4922-9ea5-b7dad042e97f.png[width=600]
+
+. _The previous query with the customer_id, will help me to find the `inventory_id` so we can reach the film titles. I will limit the `45 rows output` to 5 just for esthetic reasons_
+
+```sql
+SELECT
+    inventory_id
+FROM
+    rental
+WHERE
+    customer_id IN (
+        SELECT
+            customer_id
+        FROM
+            (
+                SELECT
+                    customer_id,
+                    sum(amount)
+                FROM
+                    payment
+                GROUP BY
+                    1
+                ORDER BY
+                    2 DESC
+                LIMIT
+                    1
+            ) t
+    );
+```
+image::https://user-images.githubusercontent.com/63274055/151603810-8d3cd45a-7abe-4ac5-a1c0-9a99cac2fd2b.png[width=600]
+
+. _Next I will output the `film_id`_
+
+```sql
+SELECT
+    film_id
+FROM
+    inventory
+WHERE
+    inventory_id IN (
+        SELECT
+            inventory_id
+        FROM
+            rental
+        WHERE
+            customer_id IN (
+                SELECT
+                    customer_id
+                FROM
+                    (
+                        SELECT
+                            customer_id,
+                            sum(amount)
+                        FROM
+                            payment
+                        GROUP BY
+                            1
+                        ORDER BY
+                            2 DESC
+                        LIMIT
+                            1
+                    ) t
+            )
+    );
+```
+image::https://user-images.githubusercontent.com/63274055/151604699-c4482ed4-3068-4c9f-9a82-9a29c131df2c.png[width=600]
+
+. _finding the `titles: I have 44 titles returned`_
+
+```sql
+SELECT
+    title AS film_title
+FROM
+    film
+WHERE
+    film_id IN (
+        SELECT
+            film_id
+        FROM
+            inventory
+        WHERE
+            inventory_id IN (
+                SELECT
+                    inventory_id
+                FROM
+                    rental
+                WHERE
+                    customer_id IN (
+                        SELECT
+                            customer_id
+                        FROM
+                            (
+                                SELECT
+                                    customer_id,
+                                    sum(amount)
+                                FROM
+                                    payment
+                                GROUP BY
+                                    1
+                                ORDER BY
+                                    2 DESC
+                                LIMIT
+                                    1
+                            ) t
+                    )
+            )
+    );
+```
+
+image::https://user-images.githubusercontent.com/63274055/151605325-21d40b07-73a1-4866-b9cf-d175682f21e9.png[width=600]
+
+
+. _To be able to obtain the customer_name, I need to recycle the `customer_id` query in step 2_
+
+
+```sql
+SELECT
+    concat(first_name, ' ', last_name) AS customer_name
+FROM
+    customer
+WHERE
+    customer_id IN (
+        SELECT
+            customer_id
+        FROM
+            (
+                SELECT
+                    customer_id,
+                    sum(amount)
+                FROM
+                    payment
+                GROUP BY
+                    1
+                ORDER BY
+                    2 DESC
+                LIMIT
+                    1
+            ) t
+    );
+```
+
+image::https://user-images.githubusercontent.com/63274055/151606431-e4e63ebf-a5c0-4ae9-b46c-c8357ce066ad.png[width=600]
+
+. _On the final query, I will insert in the `SELECT` statement the `customer_name` so we have a table with the rented films and the name of the person that rented them, in this case is our most profitable customer_
+
+```sql
+SELECT
+    title AS film_titles_rented,
+    (
+        SELECT
+            concat(first_name, ' ', last_name) AS customer_name
+        FROM
+            customer
+        WHERE
+            customer_id IN (
+                SELECT
+                    customer_id
+                FROM
+                    (
+                        SELECT
+                            customer_id,
+                            sum(amount)
+                        FROM
+                            payment
+                        GROUP BY
+                            1
+                        ORDER BY
+                            2 DESC
+                        LIMIT
+                            1
+                    ) t
+            )
+    ) AS customer_name_most_prof
+FROM
+    film
+WHERE
+    film_id IN (
+        SELECT
+            film_id
+        FROM
+            inventory
+        WHERE
+            inventory_id IN (
+                SELECT
+                    inventory_id
+                FROM
+                    rental
+                WHERE
+                    customer_id IN (
+                        SELECT
+                            customer_id
+                        FROM
+                            (
+                                SELECT
+                                    customer_id,
+                                    sum(amount)
+                                FROM
+                                    payment
+                                GROUP BY
+                                    1
+                                ORDER BY
+                                    2 DESC
+                                LIMIT
+                                    1
+                            ) t
+                    )
+            )
+    );
+```
+
+image::https://user-images.githubusercontent.com/63274055/151607288-cf8aa5f7-91f5-4071-a07d-8f81f2874d89.png[width=600]
+
+
+
 == Get the client_id and the total_amount_spent of those clients who spent more than the average of the total_amount spent by each client.
 
 
