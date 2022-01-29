@@ -449,7 +449,9 @@ image::https://user-images.githubusercontent.com/63274055/151601450-eade6fec-4e0
 ''''
 ====
 
-Step 2: _Now I need to have a query that outputs only the `customer_id`. The previous query has two columns and it would not work to use it as a subquery. But I will use it to create the new query_
+Step 2:
+
+_Now I need to have a query that outputs only the `customer_id`. The previous query has two columns and it would not work to use it as a subquery. But I will use it to create the new query_
 
 ```sql
 SELECT
@@ -701,6 +703,51 @@ WHERE
 ```
 
 image::https://user-images.githubusercontent.com/63274055/151607288-cf8aa5f7-91f5-4071-a07d-8f81f2874d89.png[width=600]
+
+`*_Answer using joins:_*`
+
+_in this approach, I combined joins and subqueries. To be able to filter the films by the most profitable customer at the `WHERE` clause, I recycled the subqueries in xref:Step-2:[Step 2] when building the query using subqueries only._
+
+ _Also this time Im using the `USING` clause, which I find very convenient to setup joins when the joining keys have the same name_
+
+```sql
+SELECT
+    f.film_id,
+    f.title AS rented_films,
+    c.customer_id,
+    concat(c.first_name, ' ', c.last_name) AS most_profit_customer
+FROM
+    customer c
+    INNER JOIN payment p USING (customer_id)
+    INNER JOIN rental r USING (rental_id)
+    INNER JOIN inventory i USING (inventory_id)
+    INNER JOIN film f USING (film_id)
+WHERE
+    c.customer_id = (
+        SELECT
+            customer_id
+        FROM
+            (
+                SELECT
+                    customer_id,
+                    sum(amount)
+                FROM
+                    payment
+                GROUP BY
+                    1
+                ORDER BY
+                    2 DESC
+                LIMIT
+                    1
+            ) t
+    )
+GROUP BY
+    2;
+```
+
+image::https://user-images.githubusercontent.com/63274055/151650283-118c840b-4c5b-4b59-94b5-5b2485d607f4.png[width=600]
+
+
 
 xref:Lab-SQL-Subqueries[Top Section]
 
