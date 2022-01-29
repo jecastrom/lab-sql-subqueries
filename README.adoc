@@ -427,7 +427,11 @@ xref:Get-the-client_id-and-the-total_amount_spent[Bottom section]
 
 `*_Answer: using subqueries, step by step_*` 
 
-Step 1: _Every query will be used as a filter in the `WHERE` clause. First I need to identify the `customer_id` of the customer that has made the largest sum of payments_
+===== Step 1:
+
+* `find the most profitable customer`
+
+_Every query will be used as a filter in the `WHERE` clause. First I need to identify the `customer_id` of the customer that has made the largest sum of payments_
 
 ```sql
 SELECT
@@ -450,6 +454,8 @@ image::https://user-images.githubusercontent.com/63274055/151601450-eade6fec-4e0
 ====
 
 ===== Step 2
+
+* `customer_id`
 
 _Now I need to have a query that outputs only the `customer_id`. The previous query has two columns and it would not work to use it as a subquery. But I will use it to create the new query_
 
@@ -478,7 +484,11 @@ image::https://user-images.githubusercontent.com/63274055/151602299-c3420d17-9ec
 ''''
 ====
 
-Step 3: _The previous query with the customer_id, will help me to find the `inventory_id` so we can reach the film titles. I will limit the `45 rows output` to 5 just for esthetic reasons_
+===== Step 3
+
+* `inventory_id`
+
+_The previous query with the customer_id, will help me to find the `inventory_id` so we can reach the film titles. I will limit the `45 rows output` to 5 just for esthetic reasons_
 
 ```sql
 SELECT
@@ -511,7 +521,11 @@ image::https://user-images.githubusercontent.com/63274055/151603810-8d3cd45a-7ab
 ''''
 ====
 
-Step 4: _Next I will output the `film_id`_
+===== Step 4
+
+* `film_id`
+
+_Next I will output the `film_id`_
 
 ```sql
 SELECT
@@ -551,7 +565,11 @@ image::https://user-images.githubusercontent.com/63274055/151604699-c4482ed4-306
 ''''
 ====
 
-Step 5: _finding the `titles: I have 44 titles returned`_
+===== Step 5
+
+* `film title`
+
+_finding the `titles: I have 44 titles returned`_
 
 ```sql
 SELECT
@@ -600,7 +618,11 @@ image::https://user-images.githubusercontent.com/63274055/151605325-21d40b07-73a
 ''''
 ====
 
-Step 6: _To be able to obtain the customer_name, I need to recycle the `customer_id` query in step 2_
+===== Step 6: 
+
+* `customer_name`
+
+_To be able to obtain the customer_name, I need to recycle the `customer_id` query in step 2_
 
 
 ```sql
@@ -635,7 +657,11 @@ image::https://user-images.githubusercontent.com/63274055/151606431-e4e63ebf-a5c
 ''''
 ====
 
-Step 7: _On the final query, I will insert in the `SELECT` statement the `customer_name` so we have a table with the rented films and the name of the person that rented them, in this case is our most profitable customer_
+===== Step 7
+
+* `Main outer final query`
+
+_On the final query, I will insert in the `SELECT` statement the `customer_name` so we have a table with the rented films and the name of the person that rented them, in this case is our most profitable customer_
 
 ```sql
 SELECT
@@ -704,9 +730,13 @@ WHERE
 
 image::https://user-images.githubusercontent.com/63274055/151607288-cf8aa5f7-91f5-4071-a07d-8f81f2874d89.png[width=600]
 
+====
+''''
+====
+
 `*_Answer using joins:_*`
 
-in this approach, I combined joins and subqueries. To be able to filter the films by the most profitable customer at the `WHERE` clause, I recycled the subqueries in xref:Step-2[Step 2] when building the query using subqueries only. <<Step-2, Step 2>>
+in this approach, I combined joins and subqueries. To be able to filter the films by the most profitable customer at the `WHERE` clause, I recycled the subqueries in <<Step-2, Step 2>> when building the query using subqueries only. 
 
 Also this time Im using the `USING` clause, which I find very convenient to setup joins when the joining keys have the same name
 
@@ -747,7 +777,9 @@ GROUP BY
 
 image::https://user-images.githubusercontent.com/63274055/151650283-118c840b-4c5b-4b59-94b5-5b2485d607f4.png[width=600]
 
-
+====
+''''
+====
 
 xref:Lab-SQL-Subqueries[Top Section]
 
