@@ -449,7 +449,7 @@ image::https://user-images.githubusercontent.com/63274055/151601450-eade6fec-4e0
 ''''
 ====
 
-* Step 2
+===== Step 2
 
 _Now I need to have a query that outputs only the `customer_id`. The previous query has two columns and it would not work to use it as a subquery. But I will use it to create the new query_
 
