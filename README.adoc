@@ -425,7 +425,7 @@ xref:Get-the-client_id-and-the-total_amount_spent[Bottom section]
 
 == Films rented by most profitable customer. You can use the customer table and payment table to find the most profitable customer ie the customer that has made the largest sum of payments
 
-`*_Answer: using subqueries, step by step_*` 
+`*_Answer task 7: using subqueries, step by step_*` 
 
 ===== Step 1:
 
@@ -734,7 +734,7 @@ image::https://user-images.githubusercontent.com/63274055/151607288-cf8aa5f7-91f
 ''''
 ====
 
-`*_Answer using joins:_*`
+`*_Answer task 7 using joins:_*`
 
 in this approach, I combined joins and subqueries. To be able to filter the films by the most profitable customer at the `WHERE` clause, I recycled the subqueries in <<Step-2, Step 2>> when building the query using subqueries only. 
 
